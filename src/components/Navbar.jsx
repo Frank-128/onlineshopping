@@ -8,15 +8,18 @@ import { useNavigation } from '@react-navigation/native'
 
 const Navbar = () => {
   const cart = useGlobal((state)=>state.cart)
+  const user = useGlobal((state)=>state.user)
   const navigation = useNavigation()
-
+ 
   return (
     <SafeAreaView className='h-[9rem] fixed  bg-[#5e5b5b]'>
       <View className='flex-row p-4 justify-between '>
-        <FontAwesomeIcon icon={faBars} color='white' />
+       <TouchableOpacity  onPress={()=>navigation.openDrawer()}>
+        <Text> <FontAwesomeIcon icon={faBars} color='white' /></Text>
+       </TouchableOpacity>
         <View className='flex flex-row gap-x-4'>
-            <Text className='text-white'>Sign In</Text>
-            <Text className='text-white'>Sell</Text>
+            {user !== null ? <Text className='text-white'>{user.username}</Text> :<TouchableOpacity onPress={()=>navigation.navigate('SignIn')}><Text className='text-white'>Sign In</Text></TouchableOpacity>}
+           <TouchableOpacity onPress={()=>navigation.navigate('SellPage')}><Text className='text-white'>Sell</Text></TouchableOpacity> 
            <TouchableOpacity onPress={()=>navigation.navigate('Cart')}>
            <View className='relative' >
            <FontAwesomeIcon icon={faCartShopping} color='white' />
